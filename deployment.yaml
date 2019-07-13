@@ -45,7 +45,7 @@ spec:
         - name: MYSQL_ROOT_PASSWORD
           value: "password"
         - name: MYSQL_DATABASE
-          value: "mstakx"
+          value: "linxlabs"
         - name: MYSQL_USER
           value: "mediawiki"
         - name: MYSQL_PASSWORD
