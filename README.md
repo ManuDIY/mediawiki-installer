@@ -1,4 +1,8 @@
+# MediaWiki
 
+IP or Service Name or FQDN of an existing MySQL/MariaDB(version 5.6)
+
+## Defaults
 Defaults are self explanatory .
 
 ```
@@ -9,14 +13,15 @@ MEDIA_WIKI_USER=${MEDIA_WIKI_USER:-"Admin"} # User name will start with caps eve
 MEDIA_WIKI_PASS=${MEDIA_WIKI_PASS:-"P@ssw0rd1234"} # Minimum 8 characters with special cap/special/number combination
 MEDIA_WIKI_DB_USER=${MEDIA_WIKI_DB_USER:-"mediawiki"}
 MEDIA_WIKI_DB_PASS=${MEDIA_WIKI_DB_PASS:-"mediawiki"}
-MEDIA_WIKI_INSTALL_DB_USER=${MEDIA_WIKI_INSTALL_DB_USER:-"root"}
-MEDIA_WIKI_INSTALL_DB_PASS=${MEDIA_WIKI_INSTALL_DB_PASS:-"password"}
+MEDIA_WIKI_INSTALL_DB_USER=${MEDIA_WIKI_INSTALL_DB_USER:-"root"} # MySQL admin user name
+MEDIA_WIKI_INSTALL_DB_PASS=${MEDIA_WIKI_INSTALL_DB_PASS:-"password"} # MySQL admin password
 MEDIA_WIKI_DB_TYPE=${MEDIA_WIKI_DB_TYPE:-"mysql"}
 MEDIA_WIKI_DB_NAME=${MEDIA_WIKI_DB_NAME:-"linxlabs"}
 MEDIA_WIKI_DB_SERVER=${MEDIA_WIKI_DB_SERVER:-"mysql"}
 MEDIA_WIKI_LOGO=${MEDIA_WIKI_LOGO:-"https://raw.githubusercontent.com/ansilh/mediawiki-installer/master/linxlabs.png"}
 ```
 
+## Customizing YAMLs for Kubernetes
 You may customize the parameters using below environmental variables in `InitContainer`
 
 ```yaml
