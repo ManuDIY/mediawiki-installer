@@ -11,7 +11,7 @@
 DOC_ROOT=${DOC_ROOT:-"/var/www/mediawiki"}
 MEDIA_WIKI_VERSION=${MEDIA_WIKI_VERSION:-"1.33"}
 MEDIA_WIKI_SUB_VERSION=${MEDIA_WIKI_SUB_VERSION:-"0"}
-MEDIA_WIKI_NAME=${MEDIA_WIKI_NAME:-"mStakX"}
+MEDIA_WIKI_NAME=${MEDIA_WIKI_NAME:-"LinxLabs"}
 MEDIA_WIKI_USER=${MEDIA_WIKI_USER:-"admin"}
 MEDIA_WIKI_PASS=${MEDIA_WIKI_PASS:-"P@ssw0rd1234"}
 MEDIA_WIKI_DB_USER=${MEDIA_WIKI_DB_USER:-"mediawiki"}
@@ -19,9 +19,9 @@ MEDIA_WIKI_DB_PASS=${MEDIA_WIKI_DB_PASS:-"mediawiki"}
 MEDIA_WIKI_INSTALL_DB_USER=${MEDIA_WIKI_INSTALL_DB_USER:-"root"}
 MEDIA_WIKI_INSTALL_DB_PASS=${MEDIA_WIKI_INSTALL_DB_PASS:-"password"}
 MEDIA_WIKI_DB_TYPE=${MEDIA_WIKI_DB_TYPE:-"mysql"}
-MEDIA_WIKI_DB_NAME=${MEDIA_WIKI_DB_NAME:-"mstakx"}
+MEDIA_WIKI_DB_NAME=${MEDIA_WIKI_DB_NAME:-"linxlabs"}
 MEDIA_WIKI_DB_SERVER=${MEDIA_WIKI_DB_SERVER:-"mysql"}
-MEDIA_WIKI_LOGO=${MEDIA_WIKI_LOGO:-"mysql"}
+MEDIA_WIKI_LOGO=${MEDIA_WIKI_LOGO:-"https://raw.githubusercontent.com/ansilh/mediawiki-installer/master/linxlabs.png"}
 
 ##---- Download and extract  ----##
 download_and_extract(){
@@ -41,7 +41,7 @@ download_and_extract(){
         #then        
         #        mv ${DOC_ROOT}/resources/assets/wiki.png ${DOC_ROOT}/resources/assets/wiki-stock.png
         #        wget -nv ${MEDIA_WIKI_LOGO}
-        #        mv finals-logo-mstakx-light.png  ${DOC_ROOT}/resources/assets/wiki.png
+        #        mv "${MEDIA_WIKI_LOGO##*/}"  ${DOC_ROOT}/resources/assets/wiki.png
         #fi
         wget -nv "${MEDIA_WIKI_LOGO}"
         STOCK_LOGO_MD5SUM=$(md5sum ${DOC_ROOT}/resources/assets/wiki.png |awk '{print $1}')
