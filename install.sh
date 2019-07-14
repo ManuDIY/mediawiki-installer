@@ -3,8 +3,11 @@
 # Download and install MediaWiki
 # Pre-requisites : A mysql 5.6 service MEDIA_WIKI_DB_SERVER should be running with MEDIA_WIKI_DB_USER & MEDIA_WIKI_DB_PASS
 #                  DB admin credentials has to be passed via MEDIA_WIKI_INSTALL_DB_USER  & MEDIA_WIKI_INSTALL_DB_PASS
+#
+# Readiness can be checked via Port 8080 or by checking the presence of ${DOC_ROOT}/.ready
+# DOC_ROOT is fixed as /var/www/mediawiki as of now and I don't see a reason to change it
+# Neverthless , I did put it as a variable here so that if there is a valid reason , we have less job to modify this script
 # Author: ansilh@gmail.com
-
 
 ##---- Defaults ----##
 
@@ -38,12 +41,6 @@ download_and_extract(){
         tar -C /var/www -xzf "${MEDIA_WIKI_URL##*/}"
         mv /var/www/mediawiki* ${DOC_ROOT}
         rm -rf /tmp/mediawiki*
-        #if [ -f ${DOC_ROOT}/resources/assets/wiki.png  ]
-        #then        
-        #        mv ${DOC_ROOT}/resources/assets/wiki.png ${DOC_ROOT}/resources/assets/wiki-stock.png
-        #        wget -nv ${MEDIA_WIKI_LOGO}
-        #        mv "${MEDIA_WIKI_LOGO##*/}"  ${DOC_ROOT}/resources/assets/wiki.png
-        #fi
         wget -nv "${MEDIA_WIKI_LOGO}"
         STOCK_LOGO_MD5SUM=$(md5sum ${DOC_ROOT}/resources/assets/wiki.png |awk '{print $1}')
         DOWNLOAD_LOGO_MD5SUM=$(md5sum "${MEDIA_WIKI_LOGO##*/}"|awk '{print $1}')
@@ -60,15 +57,14 @@ download_and_extract(){
 }
 
 ##---- Wait for mysql to comeup ----#
-
 wait_for_mysql(){
         until nc -vz "${MEDIA_WIKI_DB_SERVER}" "${MEDIA_WIKI_DB_PORT}" ; do echo Waiting for MySQL; sleep 3 ; done ;
 }
 
 ##---- Installer  ----##
 try_install(){
-        download_and_extract
         wait_for_mysql
+        download_and_extract
         cd ${DOC_ROOT}
         php maintenance/install.php \
         --wiki "${MEDIA_WIKI_NAME}" \
