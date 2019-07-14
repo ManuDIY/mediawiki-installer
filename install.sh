@@ -21,6 +21,7 @@ MEDIA_WIKI_INSTALL_DB_PASS=${MEDIA_WIKI_INSTALL_DB_PASS:-"password"}
 MEDIA_WIKI_DB_TYPE=${MEDIA_WIKI_DB_TYPE:-"mysql"}
 MEDIA_WIKI_DB_NAME=${MEDIA_WIKI_DB_NAME:-"linxlabs"}
 MEDIA_WIKI_DB_SERVER=${MEDIA_WIKI_DB_SERVER:-"mysql"}
+MEDIA_WIKI_DB_PORT=${MEDIA_WIKI_DB_PORT:-"3306"}
 MEDIA_WIKI_LOGO=${MEDIA_WIKI_LOGO:-"https://raw.githubusercontent.com/ansilh/mediawiki-installer/master/linxlabs.png"}
 
 ##---- Download and extract  ----##
@@ -58,9 +59,16 @@ download_and_extract(){
         chown -R nginx ${DOC_ROOT}
 }
 
+##---- Wait for mysql to comeup ----#
+
+wait_for_mysql(){
+        until nc -vz "${MEDIA_WIKI_DB_SERVER}" "${MEDIA_WIKI_DB_PORT}" ; do echo Waiting for MySQL; sleep 3 ; done ;
+}
+
 ##---- Installer  ----##
 try_install(){
         download_and_extract
+        wait_for_mysql
         cd ${DOC_ROOT}
         php maintenance/install.php \
         --wiki "${MEDIA_WIKI_NAME}" \
@@ -98,5 +106,9 @@ else
         then
                 echo "Something went wrong during installation.. :("
                 exit 1
+        else
+              touch ${DOC_ROOT}/.ready
+
         fi
 fi
+nc -kl 8080

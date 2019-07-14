@@ -31,6 +31,8 @@ RUN chmod 755 /install.sh \
     php7-session \
     php7-fileinfo \
     diffutils \
+    curl \
+    netcat-openbsd \
     git \
     bash \
     wget
